@@ -1,5 +1,5 @@
 ETooltip
 --------
-Version: 0.1
-Author:  [Dimitrios Mengidis](http://www.github.com/dmtrs/)
-jQuery:  [Tooltip](http://flowplayer.org/tools/demos/tooltip/index.html) 
+- Version: 0.1
+- Author:  [Dimitrios Mengidis](http://www.github.com/dmtrs/)
+- jQuery:  [Tooltip](http://flowplayer.org/tools/demos/tooltip/index.html) 
