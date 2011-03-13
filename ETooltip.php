@@ -1,5 +1,5 @@
 <?php
-class EDefault extends CWidget
+class ETooltip extends CWidget
 {
     /**
      * Tooltip options
@@ -7,10 +7,23 @@ class EDefault extends CWidget
      * @var array
      **/
     public $tooltip;
+    /**
+     * The selector that contains the tooltip.
+     * 
+     * @var sting
+     **/
+    public $selector;
+    /**
+     * The image for the tooltip background
+     * 
+     * @var string
+     **/
+    public $image = "black_arrow.png";
+
 
     private $options;
-
-    private $cssFiles = array("tooltip.css");
+    private $init;
+    private $cssFile = "tooltip.css.php";
     private $jsFiles = array("jquery.tools.min.js");
     
     private $cssPath = "css";
@@ -24,15 +37,11 @@ class EDefault extends CWidget
         $cs = Yii::app()->clientScript;
         //Publish only one pic
         $imagesPath = dirname(__FILE__).DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR;
-        $imageAssetPath = Yii::app()->getAssetManager()->publish($imageAssetPath);
+        $image= Yii::app()->getAssetManager()->publish($imagesPath.$this->image);
+        
         if($this->css===null) {
-            $cssPath = dirname(__FILE__).DIRECTORY_SEPARATOR.$this->cssPath.DIRECTORY_SEPARATOR;
-
-            $cssAssetPath = Yii::app()->getAssetManager()->publish($cssPath);
-            foreach($this->cssFiles as $file)
-            {
-                $cs->registerCssFile($cssAssetPath.DIRECTORY_SEPARATOR.$file);
-            }
+            $cssScript  = require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.$this->cssPath.DIRECTORY_SEPARATOR.$this->cssFile);
+            $this->css = $cs->registerCss($this->id."_css", $cssScript, "screen");
         }
         if($this->js===null) {
             $jsPath = dirname(__FILE__).DIRECTORY_SEPARATOR.$this->jsPath.DIRECTORY_SEPARATOR;
@@ -52,10 +61,17 @@ class EDefault extends CWidget
         $this->registerScripts();
         $this->options = require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'tooltip.options.php');
         $this->initTooltip();
+
+        
         parent::init();
     }
     public function run()
     {
+        if(isset($this->selector)) {
+            $options = (empty($this->init)) ? '{}' : $this->init;
+            $script = "var jsn = eval(".CJSON::encode($options)."); $('".$this->selector."').tooltip(jsn);";
+            Yii::app()->clientScript->registerScript($this->id, $script, CClientScript::POS_READY);
+        }
     }
     private function initTooltip()
     {

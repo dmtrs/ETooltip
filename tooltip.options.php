@@ -1,4 +1,6 @@
-	'cancelDefault',
+<?php
+return array(
+    'cancelDefault',
 	'effect',
 	'delay',
 	'events',
@@ -10,3 +12,4 @@
 	'relative',
 	'tip',
 	'tipClass',
+);    
