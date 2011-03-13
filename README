@@ -37,9 +37,6 @@ And initialize the ETooltip widget
 ?>
 ~~~
 
-###Notice 
-
-The only required options is the "selector" which is a string of a jquery selector.
 ###Properties
 
 Available options of extensions:
@@ -47,6 +44,28 @@ Available options of extensions:
 - selector, string, the jquery selector. **Required**
 - tooltip,  array,  the jquery tooltip plugin options. Optional
 - image,    string, the image file name for the backround (default: black\_arrow.png ). Optional
+
+####**selector** property 
+
+#####Form example
+The magic **selector** is the only required property. I call it magic because it let you work with anything you like. So imagine instead of images
+there was a form.
+~~~
+[html]
+<form id="myform">
+    <input type="textfield" title="The username." />
+    <input type="textfield" title="Password of user." />
+    <input type="submit" title="Submit button." />
+</form>
+~~~
+I can take a tooltip, with content the title attribute value, if you simple set selector to:
+
+~~~
+[php]
+...
+    "selector"=>"#myform :input",
+...  
+~~~
 
 ####**tooltip** property
 
